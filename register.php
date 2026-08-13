@@ -5,15 +5,16 @@ if (isset($_POST['register'])){
     $email = $_POST['email'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
-    $sql="INSERT INTO user(username, email, password)
-        VALUES('$username', '$email', '$password')";
+    $stmt = mysqli_prepare($conn, "INSERT INTO user(username, email, password) VALUES (?,?,?)");
+    mysqli_stmt_bind_param($stmt, "sss", $username, $email, $password);
 
-    if(mysqli_query($conn, $sql)){
+    if(mysqli_stmt_execute($stmt)){
         header("Location: login.php");
         exit();
     } else {
         echo "Error: " .mysqli_error($conn);
     }
+    mysqli_stmt_close($stmt);
 }
 ?>
 

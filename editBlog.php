@@ -10,7 +10,9 @@ if (!isset($_GET['id'])) {
 $blog_id = $_GET['id'];
 $user_id = $_SESSION['user_id'];
 
+
 /* Get the blog that belongs to the logged-in user */
+
 $stmt = mysqli_prepare(
     $conn,
     "SELECT id, title, content
@@ -33,6 +35,7 @@ mysqli_stmt_close($stmt);
 
 
 /* Update the blog */
+
 if (isset($_POST['update'])) {
 
     $title = $_POST['title'];
@@ -55,10 +58,14 @@ if (isset($_POST['update'])) {
     );
 
     if (mysqli_stmt_execute($stmt)) {
+
         header("Location: viewBlog.php?id=" . $blog_id);
         exit();
+
     } else {
+
         $error = "Error updating blog: " . mysqli_error($conn);
+
     }
 
     mysqli_stmt_close($stmt);
@@ -70,54 +77,84 @@ if (isset($_POST['update'])) {
 <html>
 
 <head>
+
     <title>Edit Blog</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
 </head>
 
 <body>
 
-    <h2>Edit Blog</h2>
+    <nav class="navbar">
 
-    <?php
-    if (isset($error)) {
-        echo "<p>$error</p>";
-    }
-    ?>
+        <h2>My Blog</h2>
 
-    <form action="" method="POST">
+        <div>
 
-        <label>Blog Title</label><br>
+            <a href="index.php">Home</a>
 
-        <input
-            type="text"
-            name="title"
-            value="<?php echo htmlspecialchars($blog['title']); ?>"
-            required
-        >
+            <a href="createBlog.php">Create Blog</a>
 
-        <br><br>
+            <a href="logout.php">Logout</a>
 
-        <label>Blog Content</label><br>
+        </div>
 
-        <textarea
-            name="content"
-            rows="10"
-            cols="50"
-            required
-        ><?php echo htmlspecialchars($blog['content']); ?></textarea>
+    </nav>
 
-        <br><br>
 
-        <button type="submit" name="update">
-            Update Blog
-        </button>
+    <div class="form-container">
 
-    </form>
+        <h2>Edit Blog</h2>
 
-    <br>
+        <br>
 
-    <a href="viewBlog.php?id=<?php echo $blog_id; ?>">
-        Cancel
-    </a>
+        <?php
+
+        if (isset($error)) {
+            echo "<p>" . htmlspecialchars($error) . "</p>";
+        }
+
+        ?>
+
+
+        <form action="" method="POST">
+
+
+            <label>Blog Title</label>
+
+            <input
+                type="text"
+                name="title"
+                value="<?php echo htmlspecialchars($blog['title']); ?>"
+                required
+            >
+
+
+            <label>Blog Content</label>
+
+            <textarea
+                name="content"
+                rows="10"
+                required
+            ><?php echo htmlspecialchars($blog['content']); ?></textarea>
+
+
+            <button type="submit" name="update">
+                Update Blog
+            </button>
+
+
+            <a
+                class="btn"
+                href="viewBlog.php?id=<?php echo $blog_id; ?>"
+            >
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
 
 </body>
 

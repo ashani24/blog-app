@@ -2,6 +2,8 @@
 
 include "database.php";
 
+session_start();
+
 if (!isset($_GET['id'])) {
     die("Blog not found.");
 }
@@ -10,8 +12,9 @@ $blog_id = $_GET['id'];
 
 $stmt = mysqli_prepare(
     $conn,
-    "SELECT blogPost.title, blogPost.content, blogPost.created_at,
-            user.username
+    "SELECT blogPost.id, blogPost.user_id, blogPost.title,
+            blogPost.content, blogPost.created_at,
+            blogPost.updated_at, user.username
      FROM blogPost
      INNER JOIN user ON blogPost.user_id = user.id
      WHERE blogPost.id = ?"
@@ -36,33 +39,99 @@ mysqli_stmt_close($stmt);
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title><?php echo htmlspecialchars($blog['title']); ?></title>
+
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-    <h1><?php echo htmlspecialchars($blog['title']); ?></h1>
+    <nav class="navbar">
 
-    <p>
-        <strong>Author:</strong>
-        <?php echo htmlspecialchars($blog['username']); ?>
-    </p>
+        <h2>My Blog</h2>
 
-    <p>
-        <strong>Date:</strong>
-        <?php echo $blog['created_at']; ?>
-    </p>
+        <div>
+            <a href="index.php">Home</a>
+            <a href="createBlog.php">Create Blog</a>
+            <a href="logout.php">Logout</a>
+        </div>
 
-    <hr>
+    </nav>
 
-    <p>
-        <?php echo nl2br(htmlspecialchars($blog['content'])); ?>
-    </p>
+    <div class="container">
 
-    <hr>
+        <div class="blog-card">
 
-    <a href="index.php">Back to Home</a>
+            <h1>
+                <?php echo htmlspecialchars($blog['title']); ?>
+            </h1>
+
+            <p>
+                <strong>Author:</strong>
+                <?php echo htmlspecialchars($blog['username']); ?>
+            </p>
+
+            <p>
+                <strong>Published:</strong>
+                <?php echo $blog['created_at']; ?>
+            </p>
+
+            <?php if ($blog['updated_at'] != $blog['created_at']) { ?>
+
+                <p>
+                    <strong>Updated:</strong>
+                    <?php echo $blog['updated_at']; ?>
+                </p>
+
+            <?php } ?>
+
+            <hr>
+
+            <p class="blog-content">
+                <?php
+                echo nl2br(htmlspecialchars($blog['content']));
+                ?>
+            </p>
+
+            <br>
+
+            <?php
+
+            if (
+                isset($_SESSION['user_id']) &&
+                $_SESSION['user_id'] == $blog['user_id']
+            ) {
+            ?>
+
+                <a
+                    class="btn"
+                    href="editBlog.php?id=<?php echo $blog['id']; ?>"
+                >
+                    Edit Blog
+                </a>
+
+                <a
+                    class="btn delete-btn"
+                    href="deleteBlog.php?id=<?php echo $blog['id']; ?>"
+                    onclick="return confirm('Are you sure you want to delete this blog?');"
+                >
+                    Delete Blog
+                </a>
+
+            <?php
+            }
+            ?>
+
+            <a class="btn" href="index.php">
+                Back to Home
+            </a>
+
+        </div>
+
+    </div>
 
 </body>
+
 </html>

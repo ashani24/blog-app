@@ -98,3 +98,16 @@ body {
 .form-container button:hover {
     background-color: #444;
 }
+
+.blog-content {
+    line-height: 1.8;
+    white-space: normal;
+}
+
+.delete-btn {
+    background-color: #c0392b;
+}
+
+.delete-btn:hover {
+    background-color: #a93226;
+}

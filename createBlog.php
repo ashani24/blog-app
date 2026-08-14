@@ -30,31 +30,66 @@ if (isset($_POST['create'])) {
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Create Blog</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-    <h2>Create New Blog</h2>
+    <nav class="navbar">
 
-    <?php
-    if (isset($error)) {
-        echo "<p>$error</p>";
-    }
-    ?>
+        <h2>My Blog</h2>
 
-    <form action="" method="POST">
+        <div>
+            <a href="index.php">Home</a>
+            <a href="createBlog.php">Create Blog</a>
+            <a href="logout.php">Logout</a>
+        </div>
 
-        <label>Blog Title</label><br>
-        <input type="text" name="title" required><br><br>
+    </nav>
 
-        <label>Blog Content</label><br>
-        <textarea name="content" rows="10" cols="50" required></textarea><br><br>
+    <div class="form-container">
 
-        <button type="submit" name="create">Create Blog</button>
+        <h2>Create New Blog</h2>
 
-    </form>
+        <br>
+
+        <?php
+        if (isset($error)) {
+            echo "<p>$error</p>";
+        }
+        ?>
+
+        <form action="" method="POST">
+
+            <label>Blog Title</label>
+
+            <input
+                type="text"
+                name="title"
+                placeholder="Enter your blog title"
+                required
+            >
+
+            <label>Blog Content</label>
+
+            <textarea
+                name="content"
+                rows="10"
+                placeholder="Write your blog here..."
+                required
+            ></textarea>
+
+            <button type="submit" name="create">
+                Create Blog
+            </button>
+
+        </form>
+
+    </div>
 
 </body>
+
 </html>

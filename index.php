@@ -2,7 +2,7 @@
 include "database.php";
 
 $sql = "SELECT blogPost.id, blogPost.title, blogPost.content,
-               blogPost.created_at, user.username
+               blogPost.created_at, blogPost.user_id, user.username
         FROM blogPost
         INNER JOIN user ON blogPost.user_id = user.id
         ORDER BY blogPost.created_at DESC";
@@ -12,59 +12,92 @@ $result = mysqli_query($conn, $sql);
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>My Blog Application</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-    <h1>Welcome to My Blog Application</h1>
+    <nav class="navbar">
 
-    <a href="createBlog.php">Create New Blog</a>
+        <h2>My Blog</h2>
 
-    <hr>
+        <div>
+            <a href="index.php">Home</a>
+            <a href="createBlog.php">Create Blog</a>
+            <a href="logout.php">Logout</a>
+        </div>
 
-    <h2>All Blogs</h2>
+    </nav>
 
-    <?php
-    if (mysqli_num_rows($result) > 0) {
+    <div class="container">
 
-        while ($blog = mysqli_fetch_assoc($result)) {
-    ?>
+        <h1>Welcome to My Blog Application</h1>
 
-            <article>
+        <br>
 
-                <h3><?php echo htmlspecialchars($blog['title']); ?></h3>
+        <h2>Latest Blogs</h2>
 
-                <p>
-                    <?php echo nl2br(htmlspecialchars($blog['content'])); ?>
-                </p>
+        <br>
 
-                <p>
-                    <strong>Author:</strong>
-                    <?php echo htmlspecialchars($blog['username']); ?>
-                </p>
+        <?php
 
-                <p>
-                    <strong>Date:</strong>
-                    <?php echo $blog['created_at']; ?>
-                </p>
+        if (mysqli_num_rows($result) > 0) {
 
-                <a href="viewBlog.php?id=<?php echo $blog['id']; ?>">
-                    Read More
-                </a>
+            while ($blog = mysqli_fetch_assoc($result)) {
+        ?>
 
-            </article>
+                <div class="blog-card">
 
-            <hr>
+                    <h3>
+                        <?php echo htmlspecialchars($blog['title']); ?>
+                    </h3>
 
-    <?php
+                    <p>
+                        <?php
+                        echo nl2br(
+                            htmlspecialchars(
+                                substr($blog['content'], 0, 150)
+                            )
+                        );
+                        ?>
+
+                        <?php if (strlen($blog['content']) > 150) {
+                            echo "...";
+                        } ?>
+                    </p>
+
+                    <p>
+                        <strong>Author:</strong>
+                        <?php echo htmlspecialchars($blog['username']); ?>
+                    </p>
+
+                    <p>
+                        <strong>Published:</strong>
+                        <?php echo $blog['created_at']; ?>
+                    </p>
+
+                    <a
+                        class="btn"
+                        href="viewBlog.php?id=<?php echo $blog['id']; ?>"
+                    >
+                        Read More
+                    </a>
+
+                </div>
+
+        <?php
+            }
+
+        } else {
+            echo "<p>No blogs available yet.</p>";
         }
+        ?>
 
-    } else {
-        echo "<p>No blogs available.</p>";
-    }
-    ?>
+    </div>
 
 </body>
+
 </html>

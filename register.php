@@ -24,6 +24,8 @@ if (isset($_POST['register'])){
 <head>
     <title>Register - My Blog</title>
     <link rel="stylesheet" href="css/style.css">
+
+    <script src="js/script.js"></script>
 </head>
 
 <body>
@@ -49,7 +51,7 @@ if (isset($_POST['register'])){
         <br>
 
 
-        <form action="" method="POST">
+        <form action="" method="POST" onsubmit="return validateRegistration();">
 
             <label>Username</label>
 
@@ -74,11 +76,22 @@ if (isset($_POST['register'])){
             <label>Password</label>
 
             <input
-                type="password"
-                name="password"
-                placeholder="Enter your password"
-                required
-            >
+    type="password"
+    id="password"
+    name="password"
+    placeholder="Enter your password"
+    required
+>
+
+            <label>Confirm Password</label>
+
+<input
+    type="password"
+    id="confirm_password"
+    name="confirm_password"
+    placeholder="Confirm your password"
+    required
+>
 
 
             <button type="submit" name="register">

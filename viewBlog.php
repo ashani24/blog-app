@@ -44,6 +44,8 @@ mysqli_stmt_close($stmt);
     <title><?php echo htmlspecialchars($blog['title']); ?></title>
 
     <link rel="stylesheet" href="css/style.css">
+
+    <script src="js/script.js"></script>
 </head>
 
 <body>
@@ -115,7 +117,7 @@ mysqli_stmt_close($stmt);
                 <a
                     class="btn delete-btn"
                     href="deleteBlog.php?id=<?php echo $blog['id']; ?>"
-                    onclick="return confirm('Are you sure you want to delete this blog?');"
+                    onclick="return confirmDelete();"
                 >
                     Delete Blog
                 </a>

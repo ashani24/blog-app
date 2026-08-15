@@ -111,3 +111,41 @@ body {
 .delete-btn:hover {
     background-color: #a93226;
 }
+
+@media (max-width: 600px) {
+
+    .navbar {
+        padding: 15px;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .navbar a {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .container {
+        width: 95%;
+        margin: 25px auto;
+    }
+
+    .form-container {
+        width: 95%;
+        margin: 25px auto;
+        padding: 20px;
+    }
+
+    .blog-card {
+        padding: 20px;
+    }
+
+    .blog-card h1 {
+        font-size: 26px;
+    }
+
+    .btn {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+}

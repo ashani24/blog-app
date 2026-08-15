@@ -45,31 +45,74 @@ if (isset($_POST['login'])) {
 
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Login</title>
+    <title>Login - My Blog</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-    <h2>User Login</h2>
+    <nav class="navbar">
 
-    <?php
-    if (isset($error)) {
-        echo "<p>$error</p>";
-    }
-    ?>
+        <h2>My Blog</h2>
 
-    <form action="" method="POST">
+        <div>
+            <a href="login.php">Login</a>
+            <a href="register.php">Register</a>
+        </div>
 
-        <label>Email</label><br>
-        <input type="email" name="email" required><br><br>
+    </nav>
 
-        <label>Password</label><br>
-        <input type="password" name="password" required><br><br>
+    <div class="form-container">
 
-        <button type="submit" name="login">Login</button>
+        <h2>Welcome Back</h2>
 
-    </form>
+        <p>Login to your account to continue.</p>
+
+        <br>
+
+        <?php
+        if (isset($error)) {
+            echo "<p>" . htmlspecialchars($error) . "</p>";
+        }
+        ?>
+
+        <form action="" method="POST">
+
+            <label>Email</label>
+
+            <input
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                required
+            >
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Enter your password"
+                required
+            >
+
+            <button type="submit" name="login">
+                Login
+            </button>
+
+        </form>
+
+        <br>
+
+        <p>
+            Don't have an account?
+            <a href="register.php">Register here</a>
+        </p>
+
+    </div>
 
 </body>
+
 </html>

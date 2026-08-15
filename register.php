@@ -20,25 +20,83 @@ if (isset($_POST['register'])){
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Registration</title>
-    </head>
-    <body>
-        <h2>User Registration</h2>
+
+<head>
+    <title>Register - My Blog</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <h2>My Blog</h2>
+
+        <div>
+            <a href="login.php">Login</a>
+            <a href="register.php">Register</a>
+        </div>
+
+    </nav>
+
+
+    <div class="form-container">
+
+        <h2>Create an Account</h2>
+
+        <p>Register to start creating your own blogs.</p>
+
+        <br>
+
 
         <form action="" method="POST">
-        
-            <label>Username</label><br>
-            <input type="text" name="username" required><br><br>
 
-            <label>Email</label><br>
-            <input type="email" name="email" required><br><br>
+            <label>Username</label>
 
-            <label>Password</label><br>
-            <input type="password" name="password" required><br><br>
+            <input
+                type="text"
+                name="username"
+                placeholder="Enter your username"
+                required
+            >
 
-            <button type="submit" name="register">Register</button>
+
+            <label>Email</label>
+
+            <input
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                required
+            >
+
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Enter your password"
+                required
+            >
+
+
+            <button type="submit" name="register">
+                Register
+            </button>
 
         </form>
-    </body>
+
+
+        <br>
+
+        <p>
+            Already have an account?
+            <a href="login.php">Login here</a>
+        </p>
+
+    </div>
+
+</body>
+
 </html>

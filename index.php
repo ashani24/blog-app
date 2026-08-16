@@ -1,4 +1,6 @@
 <?php
+
+session_start();
 include "database.php";
 
 $sql = "SELECT blogPost.id, blogPost.title, blogPost.content,
@@ -25,10 +27,22 @@ $result = mysqli_query($conn, $sql);
         <h2>My Blog</h2>
 
         <div>
-            <a href="index.php">Home</a>
-            <a href="createBlog.php">Create Blog</a>
-            <a href="logout.php">Logout</a>
-        </div>
+
+    <a href="index.php">Home</a>
+
+    <?php if (isset($_SESSION['user_id'])) { ?>
+
+        <a href="createBlog.php">Create Blog</a>
+        <a href="logout.php">Logout</a>
+
+    <?php } else { ?>
+
+        <a href="login.php">Login</a>
+        <a href="register.php">Register</a>
+
+    <?php } ?>
+
+</div>
 
     </nav>
 
